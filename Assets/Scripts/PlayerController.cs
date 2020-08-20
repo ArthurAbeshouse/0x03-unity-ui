@@ -18,10 +18,16 @@ public class PlayerController : MonoBehaviour
 
     public Text healthText;
 
+    private Text WinLoseText;
+
+    public Image WinLoseBG;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        WinLoseText = WinLoseBG.GetComponentInChildren<Text>();
+        WinLoseBG.enabled = false;
     }
 
     // Update is called once per frame
@@ -45,12 +51,34 @@ public class PlayerController : MonoBehaviour
         healthText.text = "Health: " + health;
     }
 
+    void SetWinText()
+    {
+        WinLoseBG.color = Color.green;
+        WinLoseText.text = "You Win!";
+        WinLoseText.color = Color.black;
+        WinLoseBG.enabled = true;
+    }
+
+    void SetLoseText()
+    {
+        WinLoseBG.color = Color.red;
+        WinLoseText.text = "Game Over!";
+        WinLoseText.color = Color.white;
+        WinLoseBG.enabled = true;
+    }
+
+    IEnumerator LoadScene(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene("maze");
+    }
+
     void FixedUpdate()
     {
         if (health == 0)
         {
-            Debug.Log("Game Over!");
-            SceneManager.LoadScene("maze");
+            SetLoseText();
+            StartCoroutine(LoadScene(3));
         }
     }
 
@@ -73,7 +101,9 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.CompareTag("Goal"))
         {
-            Debug.Log("You win!");
+            SetWinText();
+            StartCoroutine(LoadScene(3));
+            //Debug.Log("You win!");
         }
     }
 }
