@@ -39,6 +39,11 @@ public class PlayerController : MonoBehaviour
         Vector3 force = new Vector3(hori_movement, 0.0f, verti_movement);
 
         rb.AddForce(force * speed);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
     }
 
     void SetScoreText()
