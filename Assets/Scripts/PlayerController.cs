@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
 
     public Text scoreText;
 
+    public Text healthText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,11 @@ public class PlayerController : MonoBehaviour
     void SetScoreText()
     {
         scoreText.text = "Score: " + score;
+    }
+
+    void SetHealthText()
+    {
+        healthText.text = "Health: " + health;
     }
 
     void FixedUpdate()
@@ -59,7 +66,8 @@ public class PlayerController : MonoBehaviour
         else if (other.CompareTag("Trap"))
         {
             --health;
-            Debug.Log($"Health: {health}");
+            SetHealthText();
+            //Debug.Log($"Health: {health}");
 
 
         }
